@@ -9,5 +9,6 @@ export 'src/flutter_branch_sdk_platform_interface.dart';
 export 'src/objects/app_tracking_transparency.dart';
 export 'src/objects/branch_attribution_level.dart';
 export 'src/objects/branch_universal_object.dart';
+export 'src/widgets/flutter_branch_paste_control_button.dart';
 
 part 'src/flutter_branch_sdk.dart';

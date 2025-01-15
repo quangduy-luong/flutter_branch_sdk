@@ -34,6 +34,9 @@ public class FlutterBranchSdkPlugin: NSObject, FlutterPlugin, FlutterStreamHandl
         methodChannel = FlutterMethodChannel(name: MESSAGE_CHANNEL, binaryMessenger: registrar.messenger())
         eventChannel = FlutterEventChannel(name: EVENT_CHANNEL, binaryMessenger: registrar.messenger())
         eventChannel!.setStreamHandler(instance)
+
+        let factory = PasteControlFactory(messenger: registrar.messenger())
+        registrar.register(factory, withId: "branch-platform-view")
         
         registrar.addApplicationDelegate(instance)
         registrar.addMethodCallDelegate(instance, channel: methodChannel!)
@@ -53,7 +56,9 @@ public class FlutterBranchSdkPlugin: NSObject, FlutterPlugin, FlutterStreamHandl
         print("Branch Disable NativeLink: \(String(describing:disable_nativelink))");
         
         if !disable_nativelink {
-            if #available(iOS 15.0, *) {
+            if #available(iOS 16.0, *) {
+                // Don't check pasteboard on install, instead utilize UIPasteControl
+            } else if #available(iOS 15.0, *) {
                 Branch.getInstance().checkPasteboardOnInstall()
             }
         }
