@@ -136,7 +136,7 @@ public class FlutterBranchSdkPlugin: NSObject, FlutterPlugin, FlutterStreamHandl
     // FlutterMethodChannel Interface Methods
     // --------------------------------------------------------------------------------------------
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        switch (call.method) {
+        switch call.method {
         case "init":
             setupBranch(call: call, result: result)
             break
@@ -239,6 +239,9 @@ public class FlutterBranchSdkPlugin: NSObject, FlutterPlugin, FlutterStreamHandl
         case "setConsumerProtectionAttributionLevel" :
             setConsumerProtectionAttributionLevel(call: call)
             break;
+        case "hasClipboardUrl":
+            hasClipboardUrl(result: result)
+            break
         default:
             result(FlutterMethodNotImplemented)
             break
@@ -737,6 +740,27 @@ public class FlutterBranchSdkPlugin: NSObject, FlutterPlugin, FlutterStreamHandl
         } else {
             DispatchQueue.main.async {
                 result(String(""))  // return notSupported
+            }
+        }
+    }
+    
+    private func hasClipboardUrl(result: @escaping FlutterResult) {
+        if #available(iOS 14.0, *) {
+            let pasteboard = UIPasteboard.general
+            if pasteboard.hasURLs {
+                result(true)
+            } else {
+                result(false)
+            }
+        } else {
+            // For older iOS versions, check if the string is a URL
+            let pasteboard = UIPasteboard.general
+            if let string = pasteboard.string,
+               let url = URL(string: string),
+               UIApplication.shared.canOpenURL(url) {
+                result(true)
+            } else {
+                result(false)
             }
         }
     }

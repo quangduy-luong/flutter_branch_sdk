@@ -482,4 +482,10 @@ class FlutterBranchSdkMethodChannel implements FlutterBranchSdkPlatform {
           getBranchAttributionLevelString(branchAttributionLevel)
     });
   }
+
+  @override
+  Future<bool> hasClipboardUrl() async {
+    final hasUrl = await messageChannel.invokeMethod<bool>('hasClipboardUrl');
+    return hasUrl ?? false;
+  }
 }

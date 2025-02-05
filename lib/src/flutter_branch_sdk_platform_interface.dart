@@ -290,4 +290,12 @@ abstract class FlutterBranchSdkPlatform extends PlatformInterface {
     throw UnimplementedError(
         'setConsumerProtectionAttributionLevel has not been implemented');
   }
+
+  /// Checks if there is a URL in the clipboard (iOS only)
+  ///
+  /// Returns `true` if there is a URL in the clipboard, `false` otherwise.
+  /// On platforms other than iOS, this will always return `false`.
+  Future<bool> hasClipboardUrl() async {
+    throw UnimplementedError('hasClipboardUrl has not been implemented');
+  }
 }

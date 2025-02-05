@@ -387,6 +387,9 @@ public class FlutterBranchSdkPlugin implements FlutterPlugin, MethodCallHandler,
             case "setConsumerProtectionAttributionLevel":
                 setConsumerProtectionAttributionLevel(call);
                 break;
+            case "hasClipboardUrl":
+                result.success(false); // Always return false on Android since this is iOS-specific
+                break;
             default:
                 result.notImplemented();
                 break;
@@ -1019,5 +1022,3 @@ public class FlutterBranchSdkPlugin implements FlutterPlugin, MethodCallHandler,
         Branch.getInstance().setConsumerProtectionAttributionLevel(Defines.BranchAttributionLevel.valueOf(branchAttributionLevelString));
     }
 }
-
-
