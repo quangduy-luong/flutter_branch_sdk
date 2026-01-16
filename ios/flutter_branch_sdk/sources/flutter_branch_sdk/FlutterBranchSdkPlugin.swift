@@ -133,6 +133,9 @@ public class FlutterBranchSdkPlugin: NSObject, FlutterPlugin, FlutterStreamHandl
         logEventChannel = FlutterEventChannel(name: LOG_CHANNEL, binaryMessenger: registrar.messenger())
         logEventChannel!.setStreamHandler(handler)
 
+        let factory = PasteControlFactory(messenger: registrar.messenger())
+        registrar.register(factory, withId: "branch-platform-view")
+
         registrar.addApplicationDelegate(instance)
         registrar.addMethodCallDelegate(instance, channel: methodChannel!)
 
